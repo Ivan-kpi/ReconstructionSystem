@@ -26,20 +26,15 @@ def calculate_metrics(hr_img, sr_img):
     hr_cropped = hr_img[:h, :w]
     sr_cropped = sr_img[:h, :w]
 
-    # PSNR працює напряму по numpy [0,255]
     psnr = compare_psnr(hr_cropped, sr_cropped, data_range=255)
 
-    # NIQE — окремо по numpy (з Y-каналу)
     niqe_score = calculate_niqe(sr_cropped, crop_border=0, input_order='HWC', convert_to='y')
 
-    # Перетворення в тензори [0, 1]
     hr_tensor = torch.from_numpy(hr_cropped).permute(2, 0, 1).unsqueeze(0).float().to(device) / 255.0
     sr_tensor = torch.from_numpy(sr_cropped).permute(2, 0, 1).unsqueeze(0).float().to(device) / 255.0
 
-    # LPIPS очікує [-1, 1], тому просто: *2 - 1
     lpips_score = lpips_model(hr_tensor * 2 - 1, sr_tensor * 2 - 1).item()
 
-    # MS-SSIM працює на [0, 1]
     ms_ssim_score = piq.multi_scale_ssim(hr_tensor, sr_tensor, data_range=1.0).item()
 
     return psnr, lpips_score, ms_ssim_score, niqe_score

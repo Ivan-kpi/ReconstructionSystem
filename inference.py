@@ -21,7 +21,8 @@ warnings.filterwarnings("ignore", category=UserWarning)
 warnings.filterwarnings("ignore", category=FutureWarning)
 
 def get_image_files(input_dir):
-    return [f for f in os.listdir(input_dir) if f.lower().endswith(SUPPORTED_EXTENSIONS)]
+    return [f for f in os.listdir(input_dir)
+            if f.lower().endswith(SUPPORTED_EXTENSIONS)]
 
 def run_srcnn():
     times = {}

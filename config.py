@@ -2,7 +2,7 @@ import os
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
-SUPPORTED_EXTENSIONS = ('.png', '.jpg', '.jpeg', '.bmp', '.webp', '.tif', '.tiff')
+SUPPORTED_EXTENSIONS = ('.png', '.jpg', '.jpeg', '.bmp')
 
 DATASETS = {
     "DIV2K": {
